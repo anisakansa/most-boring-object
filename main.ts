@@ -10,6 +10,7 @@ const LINE =
 // characters, a single line, not only white space. Count Unicode
 // code points, not UTF-16 units, so the gate matches the server's
 // character count even for characters outside the BMP.
+const text = LINE.trim();
 const chars = [...text].length;
 if (chars < 1 || chars > 200) {
   throw new Error(`entry line is ${chars} characters, gate needs 1-200`);
