@@ -7,10 +7,12 @@ const LINE =
   "The dustpan has one job \u2014 catch the dirt \u2014 and it leaves a thin grey line behind every single time.";
 
 // Gate, mirrored from the bounty rules: UTF-8 text of 1 to 200
-// characters, a single line, not only white space.
-const text = LINE.trim();
-if (text.length < 1 || text.length > 200) {
-  throw new Error(`entry line is ${text.length} characters, gate needs 1-200`);
+// characters, a single line, not only white space. Count Unicode
+// code points, not UTF-16 units, so the gate matches the server's
+// character count even for characters outside the BMP.
+const chars = [...text].length;
+if (chars < 1 || chars > 200) {
+  throw new Error(`entry line is ${chars} characters, gate needs 1-200`);
 }
 if (text.includes("\n") || text.includes("\r")) {
   throw new Error("entry line must stay on one line");
